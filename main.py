@@ -19,16 +19,19 @@ import  math
 def draw_line():
     Nu = 1494
     x = np.linspace(0,50,50)
-    p = 0.05
+    p = 0.011
     q = 1.5
     y1 = Nu * x * p
 
     # for q in np.linspace(1,2,0.2):
     plt.figure(figsize=(12, 6))
-    for i in [1,1.1,1.2,1.3,1.4,1.5,1.6,1.7]:
-        q = i
-        y2 = Nu * pow(x, q) * p
-        plt.plot(x,y2,label=i)
+    plt.plot(x, Nu * pow(x,1) * 0.05,label="1")
+    plt.plot(x,Nu * pow(x,1.5)*0.011,label ="1.5_0.011")
+    plt.plot(x,Nu * pow(x,2)*0.0025,label ="2_0.0025")
+    # for i in [1.5]:
+    #     q = i
+    #     y2 = Nu * pow(x, q) * p
+    #     plt.plot(x,y2,label=i)
 
     y3 = -(Nu/2) * np.cos(0.15 *x) + Nu/2
     plt.plot(x,y3,label="cos")
@@ -43,9 +46,9 @@ def draw_line():
 
     plt.xlabel("steps")
     plt.ylabel("select_num")
-    plt.xlim(0, 50)
+    plt.xlim(0,22)
     plt.ylim(0, 1600)
-    plt.xticks(range(0,51,1))
+    plt.xticks(range(0,22,1))
     plt.legend(loc='lower right')
     plt.show()
 
@@ -138,7 +141,7 @@ def draw_gradually_compare2(compare_list,compare_item):   #这个函数实现起
 
 
 if __name__ =="__main__":
-    # draw_line()
+    draw_line()
     compare_list=[gradually_5_10,gradually_5_13,gradually_5_15]
-    draw_gradually_compare(compare_list,"select_pre")
+    # draw_gradually_compare(compare_list,"select_pre")
     # draw_lines_for_one_train(gradually_5_15)
