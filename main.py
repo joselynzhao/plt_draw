@@ -120,7 +120,9 @@ def draw_gradually_percent(compare_item):   #这个函数实现起来确实有�
         if compare_item == "select_pre":
             max_point = np.argmin(train_name[compare_item])
         plt.annotate(str(train_name[compare_item][max_point]), xy=(xx[max_point], train_name[compare_item][max_point]))
-
+    linex=np.linspace(0,100,101)
+    liney=np.linspace(0,100,101)
+    # plt.plot(linex,liney,ls='-.',label ="diagonal")
     plt.xticks(range(0, 105, 10))
     plt.xlabel("select_num(%)")
     plt.ylabel("value(%)")
@@ -152,9 +154,56 @@ def draw_gradually_all_percent():
         draw_gradually_percent(items)
 
 
+def select_pre_with_mAP(train_name):
+    title = train_name["title"]
+    xx = train_name["mAP"]
+    yy = train_name["select_pre"]
+    plt.figure(figsize=(10, 6))
+    plt.plot(xx, yy, label="diagonal")
+    plt.xticks(range(int(xx[0])-5, int(xx[-1])+5, 10))
+    plt.xlabel("mAP(%)")
+    plt.ylabel("select_pre(%)")
+    plt.title(title)
+    plt.savefig("select_pre_with_mAP/"+title)
+    plt.show()
+
+def select_pre_with_mAP_for_all():
+    compare_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15]
+    plt.figure(figsize=(10, 6))
+    for train_name in compare_list:
+        xx = train_name["mAP"]
+        yy = train_name["label_pre"]
+        plt.plot(xx, yy, label=train_name["title"])
+    # plt.xticks(range(20, 70, 10))
+    plt.xlabel("mAP(%)")
+    plt.ylabel("label_pre(%)")
+    plt.title("label_pre with mAP")
+    plt.savefig("label_pre_with_mAP")
+    plt.show()
+
+
+def select_pre_with_mAPtop1(train_name):
+    title = train_name["title"]
+    xx = train_name["mAP"]
+    xxx = train_name["top1"]
+    yy = train_name["select_pre"]
+    plt.figure(figsize=(10, 6))
+    plt.plot(xx, yy, label="with mAP")
+    plt.plot(xxx, yy, label="with top1")
+    plt.xticks(range(int(min(xx[0],xxx[0]))-5, int(max(xx[-1],xxx[-1]))+5, 10))
+    plt.xlabel("mAP or top1(%)")
+    plt.ylabel("select_pre(%)")
+    plt.title(title)
+    plt.savefig("select_pre_with_mAPtop1/"+title)
+    plt.show()
+
+
+
+
 if __name__ =="__main__":
-    pass
+    # pass
     # draw_lines_for_all_train()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent()
     # draw_line()
+    select_pre_with_mAP_for_all()
