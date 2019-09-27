@@ -50,6 +50,7 @@ def draw_line():
     plt.ylim(0, 1600)
     plt.xticks(range(0,22,1))
     plt.legend(loc='lower right')
+    plt.savefig("lines_compare")
     plt.show()
 
 
@@ -66,7 +67,7 @@ def draw_lines_for_one_train(train_name):
     plt.annotate(str(train_name["top1"][top1_max]), xy=(top1_max + 2, train_name["top1"][top1_max]))
     plt.plot(x,train_name["label_pre"],label="label_pre",marker='o')
     plt.plot(x,train_name["select_pre"],label="select_pre",marker='o')
-    plt.xticks(range(0, train_name["length"]+1, 1))
+    plt.xticks(range(1, train_name["length"]+1, 1))
     plt.xlabel("steps")
     plt.ylabel("value(%)")
     plt.title(train_name["title"])
@@ -85,11 +86,11 @@ def draw_gradually_compare(compare_list,compare_item):
         max_point = np.argmax(train_name[compare_item])
         if compare_item=="select_pre":
             max_point = np.argmin(train_name[compare_item])
-        plt.annotate(str(train_name[compare_item][max_point]), xy=(max_point + 2, train_name[compare_item][max_point]))
+        plt.annotate(str(train_name[compare_item][max_point]), xy=(max_point + 1, train_name[compare_item][max_point]))
         x = np.linspace(1, train_name["length"] , train_name["length"])
         # print(x)
         plt.plot(x,train_name[compare_item],label=train_name["title"],marker='o')
-    plt.xticks(range(0, max_len+1, 1))
+    plt.xticks(range(1, max_len+1, 1))
     plt.xlabel("steps")
     plt.ylabel("value(%)")
     plt.title(compare_item)
@@ -98,50 +99,62 @@ def draw_gradually_compare(compare_list,compare_item):
     else: plt.legend(loc="lower right")
     plt.savefig("compares/{}".format(compare_item))
     plt.show()
-
-
     pass
     # draw_mAP
 
 
-def draw_gradually_compare2(compare_list,compare_item):   #这个函数实现起来确实有难度啊
-    plt.figure(figsize=(12, 6))
-    max_len = 0
-    nu  = 1494.0
-    for train_name in compare_list:
-        train_len = train_name["length"]
-        if(max_len<train_len):
-            max_len = train_len
-        def change(x):
-            return int(nu * math.pow(x,train_name["p"]/10) * 0.05 ) / (nu/100)
-        max_point = int(change(np.argmax(train_name[compare_item])))
-        min_point = int(change(np.argmin(train_name[compare_item])))
-        print( max_point, min_point)
-        if compare_item!="select_pre":
-            plt.annotate(str(train_name[compare_item][max_point]),
-                         xy=(max_point + 2, train_name[compare_item][max_point]))
-        else:
-            plt.annotate(str(train_name[compare_item][min_point]),
-                         xy=(min_point + 2, train_name[compare_item][min_point]))
-        x = np.linspace(0, train_name["length"]-1 , train_name["length"])
-        num = [0]
-        # print(x)
-        for i in x[1:]:
-            number = change(i)
-            num.append(number)
-        # print(num)
-        plt.plot(num,train_name[compare_item],label=train_name["title"],marker='o')
-    plt.xticks(range(0, 100, 15))
+def draw_gradually_percent(compare_item):   #这个函数实现起来确实有难度啊
+    plt.figure(figsize=(10, 6))
+    x1 = percent_gradually_5_10()
+    x2 = percent_gradually_5_13()
+    x3 = percent_gradually_5_15()
+    x4 = percent_gradually_5_k15()
+    x = [x1,x2,x3,x4]
+    compare_list = [gradually_5_10,gradually_5_13,gradually_5_15,gradually_5_k15]
+    for i in range(len(compare_list)):
+        train_name = compare_list[i]
+        xx = x[i]
+        yy =  train_name[compare_item]
+        plt.plot(xx, yy, label=train_name["title"], marker='o')
+        max_point = np.argmax(train_name[compare_item])
+        if compare_item == "select_pre":
+            max_point = np.argmin(train_name[compare_item])
+        plt.annotate(str(train_name[compare_item][max_point]), xy=(xx[max_point], train_name[compare_item][max_point]))
+
+    plt.xticks(range(0, 105, 10))
     plt.xlabel("select_num(%)")
     plt.ylabel("value(%)")
     plt.title(compare_item)
-    plt.legend(loc="lower left")
+    if compare_item!="select_pre":
+        plt.legend(loc="upper left")
+    else: plt.legend(loc="lower left")
     plt.savefig("compares_percent/{}".format(compare_item))
     plt.show()
 
 
+
+def draw_gradually_compare_all():
+    compare_list=[gradually_5_10,gradually_5_13,gradually_5_15,gradually_5_k15]
+    compare_items = ["mAP","top1","top5","top10","top20","label_pre","select_pre"]
+    for item in compare_items:
+        draw_gradually_compare(compare_list,item)
+
+
+def draw_lines_for_all_train():
+    train_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15]
+    for train_name in train_list:
+        draw_lines_for_one_train(train_name)
+
+
+def draw_gradually_all_percent():
+    compare_items = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre"]
+    for items  in compare_items:
+        draw_gradually_percent(items)
+
+
 if __name__ =="__main__":
-    draw_line()
-    compare_list=[gradually_5_10,gradually_5_13,gradually_5_15]
-    # draw_gradually_compare(compare_list,"select_pre")
-    # draw_lines_for_one_train(gradually_5_15)
+    pass
+    # draw_lines_for_all_train()
+    # draw_gradually_compare_all()
+    # draw_gradually_all_percent()
+    # draw_line()
