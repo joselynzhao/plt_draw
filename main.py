@@ -167,7 +167,7 @@ def draw_gradually_percent2(compare_list,compare_item):   #这个函数实现起
 
 def draw_gradually_compare_all():
     compare_list=[gradually_5_10,gradually_5_13,gradually_5_15,gradually_5_k15]
-    compare_list2 = [gradually_5_10, gradually_5_k15, gradually_11_15, gradually_55_25, gradually_223_05]
+    compare_list2 = [gradually_5_10, gradually_5_k15, gradually_11_15, gradually_55_25, gradually_223_05,gradually_30_04]
     compare_items = ["mAP","top1","top5","top10","top20","label_pre","select_pre"]
     compare_items2 = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre", "train_pre"]
     for item in compare_items2:
@@ -236,6 +236,48 @@ def select_pre_with_mAPtop1(train_name):
     plt.savefig("select_pre_with_mAPtop1/"+title)
     plt.show()
 
+import  codecs
+def init_outf(file_name):
+    f = codecs.open(file_name, 'r', 'utf-8')
+    datas = f.readlines()
+    steps = []
+    mPAs = []
+    top1s = []
+    top5s = []
+    top10s = []
+    top20s = []
+    label_pres = []
+    select_pres = []
+    for line in datas:
+        line = line.strip()
+        ll = line.split(" ")
+        step =int( ll[0].split('/')[0] )
+        steps.append(step)
+
+        mPA = round(float(ll[2][:-1]),1)
+        top1 = round(float(ll[10][:-1]),1)
+        top5 = round(float(ll[18][:-1]),1)
+        top10 = round(float(ll[26][:-1]),1)
+        top20 = round(float(ll[34][:-1]),1)
+        label_pre = round(float(ll[37])*100,1)
+        select_pre = round(float(ll[40])*100,2)
+
+        mPAs.append(mPA)
+        top1s.append(top1)
+        top5s.append(top5)
+        top10s.append(top10)
+        top20s.append(top20)
+        label_pres.append(label_pre)
+        select_pres.append(select_pre)
+    print(steps)
+    print(mPAs)
+    print(top1s)
+    print(top5s)
+    print(top10s)
+    print(top20s)
+    print(label_pres)
+    print(select_pres)
+
 
 
 
@@ -244,7 +286,11 @@ if __name__ =="__main__":
     # draw_lines_for_all_train()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2()
-    draw_gradually_compare_all()
+    # draw_gradually_compare_all()
     # draw_gradually_all_percent2
+    # init_outf("requeir_data1.txt")
+
+    draw_gradually_compare_all()
     # draw_line()
     # select_pre_with_mAP_for_all()
+
