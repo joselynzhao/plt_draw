@@ -89,7 +89,7 @@ def draw_gradually_compare(compare_list,compare_item):
         if(max_len<train_len):
             max_len = train_len
         max_point = np.argmax(train_name[compare_item])
-        if compare_item=="select_pre":
+        if compare_item in ["select_pre","train_pre"]:
             max_point = np.argmin(train_name[compare_item])
         plt.annotate(str(train_name[compare_item][max_point]), xy=(max_point + 1, train_name[compare_item][max_point]))
         x = np.linspace(1, train_name["length"] , train_name["length"])
@@ -99,10 +99,10 @@ def draw_gradually_compare(compare_list,compare_item):
     plt.xlabel("steps")
     plt.ylabel("value(%)")
     plt.title(compare_item)
-    if compare_item =="select_pre":
+    if compare_item in ["select_pre","train_pre"]:
         plt.legend(loc="upper right")
     else: plt.legend(loc="lower right")
-    plt.savefig("compares/{}".format(compare_item))
+    plt.savefig("compares/equalstep-{}".format(compare_item))
     plt.show()
     pass
     # draw_mAP
@@ -167,9 +167,11 @@ def draw_gradually_percent2(compare_list,compare_item):   #这个函数实现起
 
 def draw_gradually_compare_all():
     compare_list=[gradually_5_10,gradually_5_13,gradually_5_15,gradually_5_k15]
+    compare_list2 = [gradually_5_10, gradually_5_k15, gradually_11_15, gradually_55_25, gradually_223_05]
     compare_items = ["mAP","top1","top5","top10","top20","label_pre","select_pre"]
-    for item in compare_items:
-        draw_gradually_compare(compare_list,item)
+    compare_items2 = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre", "train_pre"]
+    for item in compare_items2:
+        draw_gradually_compare(compare_list2,item)
 
 
 def draw_lines_for_all_train():
@@ -184,9 +186,9 @@ def draw_gradually_all_percent():
         draw_gradually_percent(items)
 
 def draw_gradually_all_percent2():
-    compare_items = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre","train_pre","select_num"]
+    compare_items = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre","train_pre"]
     compare_list1 = [gradually_5_10,gradually_5_13,gradually_5_15]
-    compare_list2 = [gradually_5_10,gradually_5_k15,gradually_11_15,gradually_55_25]
+    compare_list2 = [gradually_5_10,gradually_5_k15,gradually_11_15,gradually_55_25,gradually_223_05]
     for items  in compare_items:
         draw_gradually_percent2(compare_list2,items)
 
@@ -242,5 +244,7 @@ if __name__ =="__main__":
     # draw_lines_for_all_train()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2()
-    draw_line()
+    draw_gradually_compare_all()
+    # draw_gradually_all_percent2
+    # draw_line()
     # select_pre_with_mAP_for_all()
