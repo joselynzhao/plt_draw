@@ -26,15 +26,20 @@ def draw_line():
     # for q in np.linspace(1,2,0.2):
     plt.figure(figsize=(12, 6))
     plt.plot(x, Nu * pow(x,1) * 0.05,label="1")
-    plt.plot(x,Nu * pow(x,1.5)*0.011,label ="1.5_0.011")
-    plt.plot(x,Nu * pow(x,2)*0.0025,label ="2_0.0025")
+    # plt.plot(x,Nu * pow(x,1.5)*0.011,label ="1.5_0.011")
+    # plt.plot(x,Nu * pow(x,2)*0.0025,label ="2_0.0025")
+    # plt.plot(x, Nu * pow(x, 2.5) * 0.00055, label="2.5_0.0025")
+    plt.plot(x, Nu * pow(x, 0.5) * 0.224, label="0.5_0.225")
+    plt.plot(x, Nu * pow(x, 0.4) * 0.3, label="0.4_0.3")
     # for i in [1.5]:
-    #     q = i
+    #     q = i2
     #     y2 = Nu * pow(x, q) * p
     #     plt.plot(x,y2,label=i)
 
     y3 = -(Nu/2) * np.cos(0.15 *x) + Nu/2
+    y4 = Nu * pow(x,1) * 0.05 -y3
     plt.plot(x,y3,label="cos")
+    plt.plot(x,y4,label="-cos")
 
 
     # plt.plot(x,y1,'b')
@@ -109,8 +114,9 @@ def draw_gradually_percent(compare_item):   #这个函数实现起来确实有�
     x2 = percent_gradually_5_13()
     x3 = percent_gradually_5_15()
     x4 = percent_gradually_5_k15()
-    x = [x1,x2,x3,x4]
-    compare_list = [gradually_5_10,gradually_5_13,gradually_5_15,gradually_5_k15]
+    x5 = percent_gradually_11_15()
+    x = [x1,x2,x3,x4,x5]
+    compare_list = [gradually_5_10,gradually_5_13,gradually_5_15,gradually_5_k15,gradually_11_15]
     for i in range(len(compare_list)):
         train_name = compare_list[i]
         xx = x[i]
@@ -134,6 +140,30 @@ def draw_gradually_percent(compare_item):   #这个函数实现起来确实有�
     plt.show()
 
 
+def draw_gradually_percent2(compare_list,compare_item):   #这个函数实现起来确实有难度啊
+    plt.figure(figsize=(10, 6))
+    for train_name in compare_list:
+        xx = train_name["select_percent"]
+        yy = train_name[compare_item]
+        plt.plot(xx, yy, label=train_name["title"], marker='o')
+        max_point = np.argmax(train_name[compare_item])
+        if compare_item in [ "select_pre","train_pre"] :
+            max_point = np.argmin(train_name[compare_item])
+        plt.annotate(str(train_name[compare_item][max_point]), xy=(xx[max_point], train_name[compare_item][max_point]))
+
+    linex=np.linspace(0,100,101)
+    liney=np.linspace(0,100,101)
+    # plt.plot(linex,liney,ls='-.',label ="diagonal")
+    plt.xticks(range(0, 105, 10))
+    plt.xlabel("select_num(%)")
+    plt.ylabel("value(%)")
+    plt.title(compare_item)
+    if compare_item not in ["select_pre","train_pre"]:
+        plt.legend(loc="upper left")
+    else: plt.legend(loc="lower left")
+    plt.savefig("compares_percent/equalstep-{}".format(compare_item))
+    plt.show()
+
 
 def draw_gradually_compare_all():
     compare_list=[gradually_5_10,gradually_5_13,gradually_5_15,gradually_5_k15]
@@ -152,6 +182,13 @@ def draw_gradually_all_percent():
     compare_items = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre"]
     for items  in compare_items:
         draw_gradually_percent(items)
+
+def draw_gradually_all_percent2():
+    compare_items = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre","train_pre","select_num"]
+    compare_list1 = [gradually_5_10,gradually_5_13,gradually_5_15]
+    compare_list2 = [gradually_5_10,gradually_5_k15,gradually_11_15,gradually_55_25]
+    for items  in compare_items:
+        draw_gradually_percent2(compare_list2,items)
 
 
 def select_pre_with_mAP(train_name):
@@ -204,6 +241,6 @@ if __name__ =="__main__":
     # pass
     # draw_lines_for_all_train()
     # draw_gradually_compare_all()
-    # draw_gradually_all_percent()
-    # draw_line()
-    select_pre_with_mAP_for_all()
+    # draw_gradually_all_percent2()
+    draw_line()
+    # select_pre_with_mAP_for_all()
