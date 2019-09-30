@@ -72,6 +72,9 @@ def draw_lines_for_one_train(train_name):
     plt.annotate(str(train_name["top1"][top1_max]), xy=(top1_max + 2, train_name["top1"][top1_max]))
     plt.plot(x,train_name["label_pre"],label="label_pre",marker='o')
     plt.plot(x,train_name["select_pre"],label="select_pre",marker='o')
+    plt.plot(x,train_name["train_pre"],label="train_pre",marker ="o")
+    plt.plot(x,train_name["select_percent"],label="select_percent",marker ="o")
+    # plt.plot(x,train_name["select_num"],label="select_num",marker ="o")
     plt.xticks(range(1, train_name["length"]+1, 1))
     plt.xlabel("steps")
     plt.ylabel("value(%)")
@@ -175,7 +178,7 @@ def draw_gradually_compare_all():
 
 
 def draw_lines_for_all_train():
-    train_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15]
+    train_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15,gradually_11_15,gradually_55_25,gradually_223_05,gradually_30_04]
     for train_name in train_list:
         draw_lines_for_one_train(train_name)
 
@@ -283,14 +286,14 @@ def init_outf(file_name):
 
 if __name__ =="__main__":
     # pass
-    # draw_lines_for_all_train()
+    draw_lines_for_all_train()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2
     # init_outf("requeir_data1.txt")
 
-    draw_gradually_compare_all()
+    # draw_gradually_compare_all()
     # draw_line()
     # select_pre_with_mAP_for_all()
 
