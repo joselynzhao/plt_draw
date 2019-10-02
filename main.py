@@ -84,6 +84,7 @@ def draw_lines_for_one_train(train_name):
     plt.show()
 
 
+
 def draw_gradually_compare(compare_list,compare_item):
     plt.figure(figsize=(12, 6))
     max_len = 0
@@ -107,7 +108,7 @@ def draw_gradually_compare(compare_list,compare_item):
     else: plt.legend(loc="lower right")
     plt.savefig("compares/equalstep-{}".format(compare_item))
     plt.show()
-    pass
+
     # draw_mAP
 
 
@@ -189,9 +190,9 @@ def draw_gradually_all_percent():
         draw_gradually_percent(items)
 
 def draw_gradually_all_percent2():
-    compare_items = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre","train_pre"]
+    compare_items = ["mAP", "top1", "label_pre", "select_pre","train_pre"]
     compare_list1 = [gradually_5_10,gradually_5_13,gradually_5_15]
-    compare_list2 = [gradually_5_10,gradually_5_k15,gradually_11_15,gradually_55_25,gradually_223_05]
+    compare_list2 = [gradually_5_10,gradually_5_k15,gradually_11_15,gradually_55_25,gradually_223_05,AP_bs_50]
     for items  in compare_items:
         draw_gradually_percent2(compare_list2,items)
 
@@ -282,13 +283,50 @@ def init_outf(file_name):
     print(select_pres)
 
 
+def init_outf2(file_name):
+    f = codecs.open(file_name, 'r', 'utf-8')
+    datas = f.readlines()
+    steps = []
+    mPAs = []
+    top1s = []
+    nums_selected = []
+    select_percent = []
+    label_pres = []
+    select_pres = []
+    for line in datas:
+        line = line.strip()
+        line = line.split(" ")
+        for ll in line:
+            data = ll.split(":")
+            if(data[0]=="step"):
+                steps.append(int(data[1]))
+            if(data[0]=="top1"):
+                top1s.append(round(float(data[1][:-1]),2))
+            if(data[0]=="nums_selected"):
+                nums_selected.append(int(data[1]))
+            if(data[0]=="selected_percent"):
+                select_percent.append(round(float(data[1][:-1]),2))
+            if(data[0] =="mAP"):
+                mPAs.append(round(float(data[1][:-1]),2))
+            if(data[0]=="label_pre"):
+                label_pres.append(round(float(data[1][:-1]),2))
+            if(data[0] =="select_pre"):
+                select_pres.append(round(float(data[1][:-1]),2))
+
+    print("steps",steps)
+    print("mPAs", mPAs)
+    print("top1s", top1s)
+    print("label_pres",label_pres)
+    print("select_pres",select_pres)
+    print("nums_selected",nums_selected)
+    print("select_percent",select_percent)
 
 
 if __name__ =="__main__":
     # pass
-    draw_lines_for_all_train()
+    # draw_lines_for_all_train()
     # draw_gradually_compare_all()
-    # draw_gradually_all_percent2()
+    draw_gradually_all_percent2()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2
     # init_outf("requeir_data1.txt")
@@ -296,4 +334,5 @@ if __name__ =="__main__":
     # draw_gradually_compare_all()
     # draw_line()
     # select_pre_with_mAP_for_all()
+    # draw_lines_for_one_train(AP_bs_50)
 
