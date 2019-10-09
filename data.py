@@ -151,133 +151,35 @@ AP_bs_50={
 }
 
 
+EF_5_q_1pro={
+    "title": "EF_5_q_1pro",
+    "length": 21,
+    "mAP": [30.1, 29.66, 31.89, 35.67, 38.41, 43.55, 44.52, 45.12, 47.01, 49.86, 49.7, 51.89, 53.91, 54.32, 55.39, 57.07, 54.84, 55.91, 56.95, 55.36, 56.31],
+    "top1": [34.33, 34.33, 36.75, 41.45, 43.3, 51.28, 50.43, 52.56, 54.13, 58.26, 58.26, 61.82, 64.25, 64.39, 64.67, 66.38, 64.39, 65.38, 65.38, 64.96, 65.24],
+    "top5": [],
+    "top10": [],
+    "top20": [],
+    "label_pre": [41.16, 42.9, 43.51, 47.32, 50.47, 54.95, 55.09, 56.56, 58.43, 59.77, 61.04, 62.65, 63.99, 64.93, 64.66, 65.39, 66.0, 66.27, 66.4, 66.53, 66.67],
+    "select_pre": [85.0, 97.06, 93.6, 87.95, 88.89, 91.14, 92.08, 91.86, 91.3, 86.71, 84.05, 84.95, 83.56, 82.6, 74.32, 74.66, 70.22, 67.3, 66.44, 66.53, 66.67],
+    "train_pre": [100.0, 99.61, 98.83, 96.98, 96.6, 96.84, 96.87, 96.49, 95.92, 93.45, 91.72, 91.86, 90.74, 89.84, 84.61, 84.37, 81.19, 78.9, 77.92, 77.57, 77.32],
+    "select_percent": [0.0, 5.02, 10.04, 15.06, 20.01, 25.03, 30.05, 35.01, 40.03, 45.05, 50.0, 55.02, 60.04, 65.06, 70.01, 75.03, 80.05, 85.01, 90.03, 95.05, 100.0],
+    "select_num": [0, 75, 150, 225, 299, 374, 449, 523, 598, 673, 747, 822, 897, 972, 1046, 1121, 1196, 1270, 1345, 1420, 1494]
+}
 
-import  numpy as np
-import  math
-def get_len(train_name):
-    return len(train_name["mAP"])
-
-def percent_gradually_5_k15():
-    Nu = 1494.0
-    k = 15
-    x = np.linspace(1,gradually_5_k15["length"],gradually_5_k15["length"])
-    def fun(x):
-        num =  min(math.ceil(-(Nu/2) * np.cos((k/100) * (x-1))+(Nu/2)),Nu)
-        return round(num)
-    xx = list(map(fun,x))
-    print("percent_gradually_5_k15",xx)
-    return xx
-
-def percent_gradually_5_10():
-    Nu = 1494.0
-    q = 1.0
-    ef = 5
-    x = np.linspace(1,gradually_5_10["length"],gradually_5_10["length"])
-    def fun(x):
-        num =  min(math.ceil(Nu * math.pow(x-1,q)*(ef/100)),Nu)
-        return round(num)
-    xx = list(map(fun,x))
-    print("percent_gradually_5_10",xx)
-    return xx
-
-def percent_gradually_5_13():
-    Nu = 1494.0
-    q = 1.3
-    ef = 5
-    x = np.linspace(1,gradually_5_13["length"],gradually_5_13["length"])
-    def fun(x):
-        num =  min(math.ceil(Nu * math.pow(x-1,q)*(ef/100)),Nu)
-        return round(num)
-    xx = list(map(fun,x))
-    print("percent_gradually_5_13",xx)
-    return xx
-
-def percent_gradually_5_15():
-    Nu = 1494.0
-    q = 1.5
-    ef = 5
-    x = np.linspace(1,gradually_5_15["length"],gradually_5_15["length"])
-    def fun(x):
-        num =  min(math.ceil(Nu * math.pow(x-1,q)*(ef/100)),Nu)
-        return round(num)
-    xx = list(map(fun,x))
-    print("percent_gradually_5_15",xx)
-    return xx
-
-
-def percent_gradually_11_15():
-    Nu = 1494.0
-    q = 1.5
-    ef = 1.1
-    x = np.linspace(1,gradually_11_15["length"],gradually_11_15["length"])
-    def fun(x):
-        num =  min(math.ceil(Nu * math.pow(x-1,q)*(ef/100)),Nu)
-        return round(num)
-    xx = list(map(fun,x))
-    print("percent_gradually_11_15",xx)
-    return xx
-
-def percent_gradually_55_25():
-    Nu = 1494.0
-    q = 2.5
-    ef = 0.055
-    x = np.linspace(1,gradually_11_15["length"],gradually_11_15["length"])
-    def fun(x):
-        num =  min(math.ceil(Nu * math.pow(x-1,q)*(ef/100)),Nu)
-        return round(num)
-    xx = list(map(fun,x))
-    print("percent_gradually_55_25",xx)
-    return xx
-
-
-def percent_gradually_223_05():
-    Nu = 1494.0
-    q = 0.5
-    ef = 22.3
-    x = np.linspace(1,gradually_223_05["length"],gradually_223_05["length"])
-    def fun(x):
-        num =  min(math.ceil(Nu * math.pow(x-1,q)*(ef/100)),Nu)
-        return round(num*100/Nu,2)
-    xx = list(map(fun,x))
-    print("percent_gradually_55_25",xx)
-    return xx
-
-
-def percent_gradually_30_04():
-    Nu = 1494.0
-    q = 0.4
-    ef = 30
-    x = np.linspace(1,gradually_30_04["length"],gradually_30_04["length"])
-    def fun(x):
-        num =  min(math.ceil(Nu * math.pow(x-1,q)*(ef/100)),Nu)
-        return round(num*100/Nu,2)
-        # return round(num)
-    xx = list(map(fun,x))
-    print("percent_gradually_30_04",xx)
-    return xx
-
-def get_train_pre(train_name):
-    Ln=702
-    select_pre = train_name["select_pre"]
-    select_num = train_name["select_num"]
-    def fun(pre,num):
-        return round((math.floor(pre*num/100)+Ln)*100/(num+Ln),2)
-    train_pre = list(map(fun,select_pre,select_num))
-    print(train_name["title"],train_pre)
-
-def get_train_pre_all():
-    train_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15, gradually_11_15,gradually_55_25]
-    for train_name in train_list:
-        get_train_pre(train_name)
+EF_5_q_1pro2={
+    "title": "EF_5_q_1pro2",
+    "length": 21,
+    "mAP": [28.01, 28.96, 30.89, 31.83, 35.74, 37.8, 41.44, 44.43, 45.99, 47.25, 47.64, 49.45, 50.6, 50.58, 53.19, 52.44, 53.5, 54.71, 52.93, 56.58, 52.86],
+    "top1": [34.19, 33.48, 35.9, 37.18, 41.45, 43.87, 48.58, 52.99, 53.56, 55.84, 55.7, 59.12, 59.4, 60.4, 62.11, 61.68, 63.53, 63.39, 61.54, 65.38, 62.25],
+    "top5": [],
+    "top10": [],
+    "top20": [],
+    "label_pre": [38.82, 41.9, 42.44, 43.44, 45.72, 49.26, 53.35, 56.09, 56.22, 57.03, 58.5, 61.45, 61.78, 62.78, 63.12, 62.65, 63.05, 63.45, 63.59, 63.99, 64.06],
+    "select_pre": [73.91, 75.32, 74.6, 63.22, 62.97, 69.89, 67.84, 69.49, 70.88, 70.04, 68.79, 69.93, 68.86, 68.75, 65.95, 66.99, 66.06, 64.22, 63.59, 63.99, 64.06],
+    "train_pre": [100.0, 97.55, 95.42, 91.05, 88.91, 89.5, 87.4, 86.94, 86.54, 85.31, 83.85, 83.73, 82.49, 81.84, 79.58, 79.65, 78.61, 76.93, 76.06, 75.87, 75.55],
+    "select_percent": [0.0, 5.02, 10.04, 15.06, 20.01, 25.03, 30.05, 35.01, 40.03, 45.05, 50.0, 55.02, 60.04, 65.06, 70.01, 75.03, 80.05, 85.01, 90.03, 95.05, 100.0],
+    "select_num": [0, 75, 150, 225, 299, 374, 449, 523, 598, 673, 747, 822, 897, 972, 1046, 1121, 1196, 1270, 1345, 1420, 1494]
+}
 
 
 
-
-
-
-if __name__=="__main__":
-    # print(get_len(gradually_5_15))
-    # percent_gradually_5_k15()
-    # get_train_pre(gradually_223_05)
-    # percent_gradually_30_04()
-    get_train_pre(AP_bs_50)

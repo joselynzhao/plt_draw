@@ -165,7 +165,7 @@ def draw_gradually_percent2(compare_list,compare_item):   #这个函数实现起
     if compare_item not in ["select_pre","train_pre"]:
         plt.legend(loc="upper left")
     else: plt.legend(loc="lower left")
-    plt.savefig("compares_percent/equalstep-{}".format(compare_item))
+    plt.savefig("compares_percent/ef_5_q_10-{}".format(compare_item))
     plt.show()
 
 
@@ -193,8 +193,9 @@ def draw_gradually_all_percent2():
     compare_items = ["mAP", "top1", "label_pre", "select_pre","train_pre"]
     compare_list1 = [gradually_5_10,gradually_5_13,gradually_5_15]
     compare_list2 = [gradually_5_10,gradually_5_k15,gradually_11_15,gradually_55_25,gradually_223_05,AP_bs_50]
+    compare_list3 = [EF_5_q_1pro,EF_5_q_1pro2,gradually_5_10]
     for items  in compare_items:
-        draw_gradually_percent2(compare_list2,items)
+        draw_gradually_percent2(compare_list3,items)
 
 
 def select_pre_with_mAP(train_name):
@@ -255,7 +256,7 @@ def init_outf(file_name):
     for line in datas:
         line = line.strip()
         ll = line.split(" ")
-        step =int( ll[0].split('/')[0] )
+        step =int(ll[0].split('/')[0] )
         steps.append(step)
 
         mPA = round(float(ll[2][:-1]),1)
@@ -329,10 +330,10 @@ if __name__ =="__main__":
     draw_gradually_all_percent2()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2
-    # init_outf("requeir_data1.txt")
+    # init_outf2("EF_5_q_1pro2.txt")
 
     # draw_gradually_compare_all()
     # draw_line()
     # select_pre_with_mAP_for_all()
-    # draw_lines_for_one_train(AP_bs_50)
+    # draw_lines_for_one_train(EF_10_q_1pro)
 
