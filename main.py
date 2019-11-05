@@ -16,6 +16,8 @@ import matplotlib.pyplot as plt
 import  codecs
 import  math
 
+from data_prehandle import  *
+
 def draw_line():
     Nu = 1494
     x = np.linspace(0,50,50)
@@ -24,13 +26,16 @@ def draw_line():
     y1 = Nu * x * p
 
     # for q in np.linspace(1,2,0.2):
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(8, 6), dpi=300)
+    plt.plot(x, Nu * pow(x, 0.5) * 0.05, label="0.5")
+    plt.plot(x, Nu * pow(x, 0.8) * 0.05, label="0.8")
     plt.plot(x, Nu * pow(x,1) * 0.05,label="1")
+    plt.plot(x, Nu * pow(x,1.3) * 0.05,label="1.3")
+    plt.plot(x, Nu * pow(x,1.5) * 0.05,label="1.5")
     # plt.plot(x,Nu * pow(x,1.5)*0.011,label ="1.5_0.011")
-    # plt.plot(x,Nu * pow(x,2)*0.0025,label ="2_0.0025")
     # plt.plot(x, Nu * pow(x, 2.5) * 0.00055, label="2.5_0.0025")
-    plt.plot(x, Nu * pow(x, 0.5) * 0.224, label="0.5_0.225")
-    plt.plot(x, Nu * pow(x, 0.4) * 0.3, label="0.4_0.3")
+    # plt.plot(x, Nu * pow(x, 0.5) * 0.223, label="0.5_0.223")
+    # plt.plot(x, Nu * pow(x, 0.4) * 0.3, label="0.4_0.3")
     # for i in [1.5]:
     #     q = i2
     #     y2 = Nu * pow(x, q) * p
@@ -38,8 +43,8 @@ def draw_line():
 
     y3 = -(Nu/2) * np.cos(0.15 *x) + Nu/2
     y4 = Nu * pow(x,1) * 0.05 -y3
-    plt.plot(x,y3,label="cos")
-    plt.plot(x,y4,label="-cos")
+    # plt.plot(x,y3,label="cos")
+    # plt.plot(x,y4,label="-cos")
 
 
     # plt.plot(x,y1,'b')
@@ -54,8 +59,9 @@ def draw_line():
     plt.xlim(0,22)
     plt.ylim(0, 1600)
     plt.xticks(range(0,22,1))
+    plt.title("gradually")
     plt.legend(loc='lower right')
-    plt.savefig("lines_compare")
+    plt.savefig("lines_compare/gradually—5",bbox_inches='tight')
     plt.show()
 
 
@@ -83,6 +89,147 @@ def draw_lines_for_one_train(train_name):
     plt.savefig("each_train/{}".format(train_name["title"]))
     plt.show()
 
+
+def draw_lines_for_one_train2(train_name):
+    plt.figure(figsize=(12, 6))
+    x = train_name["select_percent"]
+    plt.plot(x,train_name["mAP"],label="mAP",marker='o')
+    mAP_max = np.argmax(train_name["mAP"])
+    # plt.plot(mAP_max+2,train_name["mAP"][mAP_max], marker='s')
+    plt.annotate(str(train_name["mAP"][mAP_max]), xy=(x[mAP_max], train_name["mAP"][mAP_max]))
+    plt.plot(x,train_name["top1"],label="top1",marker='o')
+    top1_max = np.argmax(train_name["top1"])
+    plt.annotate(str(train_name["top1"][top1_max]), xy=(x[top1_max], train_name["top1"][top1_max]))
+    plt.plot(x,train_name["label_pre"],label="label_pre",marker='o')
+    plt.plot(x,train_name["select_pre"],label="select_pre",marker='o')
+    plt.plot(x,train_name["train_pre"],label="train_pre",marker ="o")
+    plt.xticks(range(0, 105, 10))
+    plt.xlabel("select_percent(%)")
+    plt.ylabel("value(%)")
+    plt.title(train_name["title"])
+    plt.legend(loc="lower right")
+    plt.savefig("each_train_percent/{}".format(train_name["title"]))
+    plt.show()
+
+
+'''将所有的train的结果都汇合到一张图上面  x = select_num'''
+def draw_trains_in_one_graph1():
+    train_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15,gradually_11_15,gradually_55_25,gradually_223_05,gradually_30_04,AP_bs_50,EF_5_q_1pro,EF_5_q_1pro2]
+    train_list = [gradually_5_10, gradually_5_13, gradually_5_15]
+    train_list = [gradually_5_10,AP_bs_50]
+    train_list = [gradually_5_10,EF_5_q_1pro,EF_5_q_1pro2]
+    train_list = [gradually_5_10, gradually_5_k15, gradually_11_15, gradually_55_25,gradually_223_05, gradually_30_04]
+    len_list = len(train_list)
+    raw = math.floor(pow(len_list,0.5))
+    col = math.ceil(len_list/raw)
+    print("col:{} , raw:{}".format(col,raw))
+    unit_size = 4.5
+    plt.figure(figsize=(4*unit_size, 2 * unit_size),dpi = 100)
+    plt.subplots_adjust( hspace=0.5)  # 调整子图间距
+    for i in range(len_list):
+        train_name = train_list[i]
+        # ax = fig.add_subplot()
+        plt.subplot(raw,col,i+1)
+        x = train_name["select_percent"]
+        plt.plot(x, train_name["mAP"], label="mAP", marker='o')
+        mAP_max = np.argmax(train_name["mAP"])
+        # plt.plot(mAP_max+2,train_name["mAP"][mAP_max], marker='s')
+        plt.annotate(str(train_name["mAP"][mAP_max]), xy=(x[mAP_max], train_name["mAP"][mAP_max]))
+        plt.plot(x, train_name["top1"], label="top1", marker='o')
+        top1_max = np.argmax(train_name["top1"])
+        plt.annotate(str(train_name["top1"][top1_max]), xy=(x[top1_max], train_name["top1"][top1_max]))
+        plt.plot(x, train_name["label_pre"], label="label_pre", marker='o')
+        plt.plot(x, train_name["select_pre"], label="select_pre", marker='o')
+        plt.plot(x, train_name["train_pre"], label="train_pre", marker="o")
+        # plt.plot(x,train_name["select_num"],label="select_num",marker ="o")
+        plt.xticks(range(0, 105, 10))
+        plt.xlabel("select_percent(%)")
+        plt.ylabel("value(%)")
+        plt.title(train_name["title"])
+        if i == 0:
+            # plt.legend(loc='center', bbox_to_anchor=(1.6,1.3), ncol=6) #all
+            plt.legend(loc='center', bbox_to_anchor=(1.6, 1.2), ncol=6)  # 1 CP
+            # plt.legend(loc='center', bbox_to_anchor=(1.2, 1.2), ncol=6)  # AP
+    # plt.suptitle("all_train", fontsize="20")
+    plt.savefig("each_train_percent/summary_percent_ES",bbox_inches='tight')
+
+'''将所有的train的结果都汇合到一张图上面   x = step'''
+def draw_trains_in_one_graph2():
+    train_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15,gradually_11_15,gradually_55_25,gradually_223_05,gradually_30_04,AP_bs_50,EF_5_q_1pro,EF_5_q_1pro2]
+    train_list = [gradually_5_10, gradually_5_13, gradually_5_15]
+    train_list = [gradually_5_10, AP_bs_50]
+    train_list = [gradually_5_10, EF_5_q_1pro, EF_5_q_1pro2]
+    train_list = [gradually_5_10, gradually_5_k15, gradually_11_15, gradually_55_25, gradually_223_05, gradually_30_04]
+    len_list = len(train_list)
+    raw = math.floor(pow(len_list,0.5))
+    col = math.ceil(len_list/raw)
+    print("col:{} , raw:{}".format(col,raw))
+    unit_size = 4.5
+    plt.figure(figsize=(4*unit_size,2 * unit_size),dpi = 100)
+    plt.subplots_adjust( hspace=0.5)  # 调整子图间距
+    for i in range(len_list):
+        train_name = train_list[i]
+        # ax = fig.add_subplot()
+        plt.subplot(raw,col,i+1)
+        x = np.linspace(1, train_name["length"]+1, train_name["length"])
+        plt.plot(x, train_name["mAP"], label="mAP", marker='o')
+        mAP_max = np.argmax(train_name["mAP"])
+        # plt.plot(mAP_max+2,train_name["mAP"][mAP_max], marker='s')
+        plt.annotate(str(train_name["mAP"][mAP_max]), xy=(x[mAP_max], train_name["mAP"][mAP_max]))
+        plt.plot(x, train_name["top1"], label="top1", marker='o')
+        top1_max = np.argmax(train_name["top1"])
+        plt.annotate(str(train_name["top1"][top1_max]), xy=(x[top1_max], train_name["top1"][top1_max]))
+        plt.plot(x, train_name["label_pre"], label="label_pre", marker='o')
+        plt.plot(x, train_name["select_pre"], label="select_pre", marker='o')
+        plt.plot(x, train_name["train_pre"], label="train_pre", marker="o")
+        plt.plot(x,train_name["select_percent"],label="select_percent",marker ="o")
+        plt.xticks(range(1, train_name["length"]+1, round(train_name["length"]/10)))
+        plt.xlabel("steps")
+        plt.ylabel("value(%)")
+        plt.title(train_name["title"])
+        if i == 0:
+            # plt.legend(loc='center', bbox_to_anchor=(1.6,1.3), ncol=6) #all
+            plt.legend(loc='center', bbox_to_anchor=(1.6,1.2), ncol=6) #1
+            # plt.legend(loc='center', bbox_to_anchor=(1.2,1.2), ncol=6) #AP
+    # plt.suptitle("all_train", fontsize="20")
+    plt.savefig("each_train_percent/summary_step_ES",bbox_inches='tight')
+
+
+'''将对比对象的各个指标拼到一张图上  x = step'''
+def summary_gradually_compare(compare_list,compare_item): #compare_item 是一个item 的list
+    len_list = len(compare_item) # 有多少的item 就有多少张子图
+    raw  = math.floor(pow(len_list,0.5))
+    col = math.ceil(len_list/raw)
+    print("col:{} , raw:{}".format(col, raw))
+    unit_size = 4.5
+    plt.figure(figsize=(4 * unit_size, 2 * unit_size), dpi=100)
+    plt.subplots_adjust(hspace=0.3)  # 调整子图间距
+    for i in range(len_list): #遍历每一个item
+        plt.subplot(raw, col, i + 1)
+        item  = compare_item[i]
+        max_len = 0
+        for train_name in compare_list:
+            train_len = train_name["length"]
+            if(max_len<train_len):
+                max_len = train_len
+            max_point = np.argmax(train_name[item])
+            if item in ["select_pre","train_pre"]:
+                max_point = np.argmin(train_name[item])
+            plt.annotate(str(train_name[item][max_point]), xy=(max_point + 1, train_name[item][max_point]))
+            x = np.linspace(1, train_name["length"] , train_name["length"])
+            plt.plot(x,train_name[item],label=train_name["title"],marker='o')
+        plt.xticks(range(1, max_len+1, round(max_len/10)))
+        plt.xlabel("steps")
+        plt.ylabel("value(%)")
+        plt.title(item)
+        if i == 1:
+            # plt.legend(loc="best")
+            plt.legend(loc='center', bbox_to_anchor=(0.5, 1.2), ncol=len(compare_list))  # 1
+        # if compare_item in ["select_pre","train_pre"]:
+        #     plt.legend(loc="upper right")
+        # else: plt.legend(loc="lower right")
+    plt.savefig("compares/summary_step_ESnorm",bbox_inches="tight")
+    plt.show()
 
 
 def draw_gradually_compare(compare_list,compare_item):
@@ -112,37 +259,35 @@ def draw_gradually_compare(compare_list,compare_item):
     # draw_mAP
 
 
-def draw_gradually_percent(compare_item):   #这个函数实现起来确实有难度啊
-    plt.figure(figsize=(10, 6))
-    x1 = percent_gradually_5_10()
-    x2 = percent_gradually_5_13()
-    x3 = percent_gradually_5_15()
-    x4 = percent_gradually_5_k15()
-    x5 = percent_gradually_11_15()
-    x = [x1,x2,x3,x4,x5]
-    compare_list = [gradually_5_10,gradually_5_13,gradually_5_15,gradually_5_k15,gradually_11_15]
-    for i in range(len(compare_list)):
-        train_name = compare_list[i]
-        xx = x[i]
-        yy =  train_name[compare_item]
-        plt.plot(xx, yy, label=train_name["title"], marker='o')
-        max_point = np.argmax(train_name[compare_item])
-        if compare_item == "select_pre":
-            max_point = np.argmin(train_name[compare_item])
-        plt.annotate(str(train_name[compare_item][max_point]), xy=(xx[max_point], train_name[compare_item][max_point]))
-    linex=np.linspace(0,100,101)
-    liney=np.linspace(0,100,101)
-    # plt.plot(linex,liney,ls='-.',label ="diagonal")
-    plt.xticks(range(0, 105, 10))
-    plt.xlabel("select_num(%)")
-    plt.ylabel("value(%)")
-    plt.title(compare_item)
-    if compare_item!="select_pre":
-        plt.legend(loc="upper left")
-    else: plt.legend(loc="lower left")
-    plt.savefig("compares_percent/{}".format(compare_item))
-    plt.show()
 
+'''将对比对象的各个指标拼到一张图上  x = select_percent'''
+def summary_gradually_percent(compare_list,compare_item):
+    len_list = len(compare_item)  # 有多少的item 就有多少张子图
+    raw = math.floor(pow(len_list, 0.5))
+    col = math.ceil(len_list / raw)
+    print("col:{} , raw:{}".format(col, raw))
+    unit_size = 4.5
+    plt.figure(figsize=(4 * unit_size, 2 * unit_size), dpi=100)
+    plt.subplots_adjust(hspace=0.3)  # 调整子图间距
+    for i in range(len_list):
+        plt.subplot(raw, col, i + 1)
+        item = compare_item[i]
+        for train_name in compare_list:
+            xx = train_name["select_percent"]
+            yy = train_name[item]
+            plt.plot(xx, yy, label=train_name["title"], marker='o')
+            max_point = np.argmax(train_name[item])
+            if item in [ "select_pre","train_pre"] :
+                max_point = np.argmin(train_name[item])
+            plt.annotate(str(train_name[item][max_point]), xy=(xx[max_point], train_name[item][max_point]))
+        plt.xticks(range(0, 105, 10))
+        plt.xlabel("select_num(%)")
+        plt.ylabel("value(%)")
+        plt.title(item)
+        if i ==1 :
+            plt.legend(loc='center', bbox_to_anchor=(0.5, 1.2), ncol=len(compare_list))  # 1
+    plt.savefig("compares_percent/summary_percent_ESnorm",bbox_inches="tight")
+    plt.show()
 
 def draw_gradually_percent2(compare_list,compare_item):   #这个函数实现起来确实有难度啊
     plt.figure(figsize=(10, 6))
@@ -179,15 +324,15 @@ def draw_gradually_compare_all():
 
 
 def draw_lines_for_all_train():
-    train_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15,gradually_11_15,gradually_55_25,gradually_223_05,gradually_30_04]
+    train_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15,gradually_11_15,gradually_55_25,gradually_223_05,gradually_30_04,AP_bs_50,EF_5_q_1pro,EF_5_q_1pro2]
     for train_name in train_list:
-        draw_lines_for_one_train(train_name)
+        draw_lines_for_one_train2(train_name)
 
 
-def draw_gradually_all_percent():
-    compare_items = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre"]
-    for items  in compare_items:
-        draw_gradually_percent(items)
+# def draw_gradually_all_percent():
+#     compare_items = ["mAP", "top1", "top5", "top10", "top20", "label_pre", "select_pre"]
+#     for items  in compare_items:
+#         draw_gradually_percent(items)
 
 def draw_gradually_all_percent2():
     compare_items = ["mAP", "top1", "label_pre", "select_pre","train_pre"]
@@ -323,17 +468,31 @@ def init_outf2(file_name):
     print("select_percent",select_percent)
 
 
+def summary_compare():
+    train_list1 = [gradually_5_10, gradually_5_13, gradually_5_15]
+    train_list2 = [gradually_5_10, AP_bs_50]
+    train_list3 = [gradually_5_10, EF_5_q_1pro, EF_5_q_1pro2]
+    train_list4 = [gradually_5_10, gradually_5_k15, gradually_11_15, gradually_55_25, gradually_223_05, gradually_30_04]
+    train_list5 = [EF70_11_15,EF70_50_10,EF70_223_05]
+    train_list6 = [gradually_5_10,EFnorm_50_10]
+    compare_items = ["mAP", "top1", "label_pre", "select_pre","train_pre"]
+    summary_gradually_compare(train_list6,compare_items)
+    summary_gradually_percent(train_list6,compare_items)
+
 if __name__ =="__main__":
     # pass
     # draw_lines_for_all_train()
     # draw_gradually_compare_all()
-    draw_gradually_all_percent2()
+    # draw_trains_in_one_graph1()
+    # draw_trains_in_one_graph2()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2
-    # init_outf2("EF_5_q_1pro2.txt")
+    # init_outf2("data5.0_1.0.10_19_14-58-12.txt")
 
     # draw_gradually_compare_all()
     # draw_line()
     # select_pre_with_mAP_for_all()
     # draw_lines_for_one_train(EF_10_q_1pro)
+
+    summary_compare()
 

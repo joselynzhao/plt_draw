@@ -10,9 +10,20 @@
 @DES:
 '''
 
+#
+# id_num = {"00":1,"b":234,"aas":32}
+# for item in id_num:
+#     id_num[item] = id_num[item] +1
+#
+# print(id_num)
 
-id_num = {"00":1,"b":234,"aas":32}
-for item in id_num:
-    id_num[item] = id_num[item] +1
-
-print(id_num)
+# 测试 写文件
+import os.path as osp
+father =  "father"
+son = "son"
+path = osp.join("file_name.txt")
+print(path)
+import codecs
+file = codecs.open("file_name.txt",'a')
+file.write("hello\n")
+file.close()

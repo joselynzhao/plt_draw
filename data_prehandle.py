@@ -116,7 +116,7 @@ def get_train_pre(train_name):
     print(train_name["title"],train_pre)
 
 def get_train_pre_all():
-    train_list = [gradually_5_10, gradually_5_13, gradually_5_15, gradually_5_k15, gradually_11_15,gradually_55_25]
+    train_list = [EFnorm_50_10]
     for train_name in train_list:
         get_train_pre(train_name)
 
@@ -130,4 +130,4 @@ if __name__=="__main__":
     # percent_gradually_5_k15()
     # get_train_pre(gradually_223_05)
     # percent_gradually_30_04()
-    get_train_pre(EF_1_q_1pro2)
+    get_train_pre_all()
