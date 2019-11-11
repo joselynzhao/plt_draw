@@ -196,12 +196,12 @@ def draw_trains_in_one_graph2():
 
 
 '''将对比对象的各个指标拼到一张图上  x = step'''
-def summary_gradually_compare(compare_list,compare_item): #compare_item 是一个item 的list
+def summary_gradually_compare(compare_list,compare_item,save_path): #compare_item 是一个item 的list
     len_list = len(compare_item) # 有多少的item 就有多少张子图
     raw  = math.floor(pow(len_list,0.5))
     col = math.ceil(len_list/raw)
     print("col:{} , raw:{}".format(col, raw))
-    unit_size = 4.5
+    unit_size = 10
     plt.figure(figsize=(4 * unit_size, 2 * unit_size), dpi=100)
     plt.subplots_adjust(hspace=0.3)  # 调整子图间距
     for i in range(len_list): #遍历每一个item
@@ -213,8 +213,8 @@ def summary_gradually_compare(compare_list,compare_item): #compare_item 是一�
             if(max_len<train_len):
                 max_len = train_len
             max_point = np.argmax(train_name[item])
-            if item in ["select_pre","train_pre"]:
-                max_point = np.argmin(train_name[item])
+            # if item in ["select_pre","train_pre"]:
+            #     max_point = np.argmin(train_name[item])
             plt.annotate(str(train_name[item][max_point]), xy=(max_point + 1, train_name[item][max_point]))
             x = np.linspace(1, train_name["length"] , train_name["length"])
             plt.plot(x,train_name[item],label=train_name["title"],marker='o')
@@ -228,7 +228,7 @@ def summary_gradually_compare(compare_list,compare_item): #compare_item 是一�
         # if compare_item in ["select_pre","train_pre"]:
         #     plt.legend(loc="upper right")
         # else: plt.legend(loc="lower right")
-    plt.savefig("compares/summary_step_ESnorm",bbox_inches="tight")
+    plt.savefig(save_path,bbox_inches="tight")
     plt.show()
 
 
@@ -432,9 +432,9 @@ def init_outf(file_name):
 def init_outf2(file_name):
     f = codecs.open(file_name, 'r', 'utf-8')
     datas = f.readlines()
-    steps = []
-    mPAs = []
-    top1s = []
+    step = []
+    mAP = []
+    top1 = []
     nums_selected = []
     select_percent = []
     label_pres = []
@@ -445,27 +445,29 @@ def init_outf2(file_name):
         for ll in line:
             data = ll.split(":")
             if(data[0]=="step"):
-                steps.append(int(data[1]))
+                step.append(int(data[1]))
             if(data[0]=="top1"):
-                top1s.append(round(float(data[1][:-1]),2))
+                top1.append(round(float(data[1][:-1]),2))
             if(data[0]=="nums_selected"):
                 nums_selected.append(int(data[1]))
             if(data[0]=="selected_percent"):
                 select_percent.append(round(float(data[1][:-1]),2))
             if(data[0] =="mAP"):
-                mPAs.append(round(float(data[1][:-1]),2))
+                mAP.append(round(float(data[1][:-1]),2))
             if(data[0]=="label_pre"):
                 label_pres.append(round(float(data[1][:-1]),2))
             if(data[0] =="select_pre"):
                 select_pres.append(round(float(data[1][:-1]),2))
 
-    print("steps",steps)
-    print("mPAs", mPAs)
-    print("top1s", top1s)
-    print("label_pres",label_pres)
-    print("select_pres",select_pres)
-    print("nums_selected",nums_selected)
-    print("select_percent",select_percent)
+    print("\"step\":{},".format(step))
+    print("\"top1\":{},".format(top1))
+    print("\"mAP\":{},".format(mAP))
+    print("\"nums_selected\":{},".format(nums_selected))
+    print("\"select_percent\":{},".format(select_percent))
+    print("\"label_pre\":{},".format(label_pres))
+    print("\"select_pre\":{},".format(select_pres))
+    print("\"length\":{},".format(step[-1]+1))
+    print("\"title\":\"{}\"".format(file_name.split("/")[-1].split(".")[0]))
 
 
 def summary_compare():
@@ -487,12 +489,13 @@ if __name__ =="__main__":
     # draw_trains_in_one_graph2()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2
-    # init_outf2("data5.0_1.0.10_19_14-58-12.txt")
+    init_outf2("data70_2/data20_1.txt")
+
 
     # draw_gradually_compare_all()
     # draw_line()
     # select_pre_with_mAP_for_all()
     # draw_lines_for_one_train(EF_10_q_1pro)
 
-    summary_compare()
+    # summary_compare()
 
