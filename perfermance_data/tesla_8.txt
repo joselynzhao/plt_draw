@@ -1,0 +1,11 @@
+step:0 traning:14.01633 evaluate:512.33668 estimate:414.02187 onetime:940.37626
+step:1 traning:40.688029 evaluate:526.91144 estimate:439.65949 onetime:1007.2606
+step:2 traning:763.54133 evaluate:528.20828 estimate:438.59297 onetime:1730.3445
+step:3 traning:726.9843 evaluate:521.55467 estimate:448.94876 onetime:1697.4896
+step:4 traning:728.3283 evaluate:518.15028 estimate:446.41907 onetime:1692.9001
+step:5 traning:726.73542 evaluate:524.64333 estimate:446.78058 onetime:1698.162
+step:6 traning:731.84279 evaluate:520.22039 estimate:440.09465 onetime:1692.1606
+step:7 traning:733.56433 evaluate:518.55187 estimate:444.67333 onetime:1696.7923
+step:8 traning:732.56462 evaluate:521.96948 estimate:450.47948 onetime:1705.0166
+step:9 traning:797.77826 evaluate:524.68244 estimate:443.59297 onetime:1766.057
+step:10 traning:819.01968 evaluate:522.89311 estimate:446.21146 onetime:1788.1276

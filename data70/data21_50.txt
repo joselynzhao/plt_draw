@@ -1,0 +1,17 @@
+step:0 top1:40.46% nums_selected:0 selected_percent:0.00% mAP:33.93% label_pre:46.92% select_pre:100.00%
+step:1 top1:41.45% nums_selected:50 selected_percent:3.35% mAP:35.34% label_pre:48.33% select_pre:97.39%
+step:2 top1:42.45% nums_selected:153 selected_percent:10.24% mAP:37.15% label_pre:50.94% select_pre:96.86%
+step:3 top1:49.00% nums_selected:255 selected_percent:17.07% mAP:42.15% label_pre:55.69% select_pre:96.64%
+step:4 top1:53.28% nums_selected:357 selected_percent:23.90% mAP:45.64% label_pre:56.83% select_pre:96.51%
+step:5 top1:56.13% nums_selected:459 selected_percent:30.72% mAP:48.08% label_pre:60.98% select_pre:96.08%
+step:6 top1:59.83% nums_selected:561 selected_percent:37.55% mAP:51.29% label_pre:63.92% select_pre:95.33%
+step:7 top1:62.96% nums_selected:664 selected_percent:44.44% mAP:54.03% label_pre:65.39% select_pre:93.73%
+step:8 top1:65.95% nums_selected:766 selected_percent:51.27% mAP:57.13% label_pre:66.93% select_pre:91.82%
+step:9 top1:68.66% nums_selected:868 selected_percent:58.10% mAP:59.42% label_pre:69.21% select_pre:90.21%
+step:10 top1:69.37% nums_selected:970 selected_percent:64.93% mAP:60.55% label_pre:70.01% select_pre:87.50%
+step:11 top1:70.23% nums_selected:1072 selected_percent:71.75% mAP:60.68% label_pre:70.35% select_pre:83.74%
+step:12 top1:72.51% nums_selected:1175 selected_percent:78.65% mAP:62.42% label_pre:71.42% select_pre:80.42%
+step:13 top1:72.51% nums_selected:1277 selected_percent:85.48% mAP:63.40% label_pre:72.42% select_pre:77.16%
+step:14 top1:71.23% nums_selected:1379 selected_percent:92.30% mAP:62.50% label_pre:72.56% select_pre:73.06%
+step:15 top1:72.08% nums_selected:1481 selected_percent:99.13% mAP:63.47% label_pre:72.42% select_pre:72.42%
+step:16 top1:72.36% nums_selected:1494 selected_percent:100.00% mAP:63.84% label_pre:72.42% select_pre:72.42%

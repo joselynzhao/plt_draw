@@ -201,7 +201,7 @@ def summary_gradually_compare(compare_list,compare_item,save_path): #compare_ite
     raw  = math.floor(pow(len_list,0.5))
     col = math.ceil(len_list/raw)
     print("col:{} , raw:{}".format(col, raw))
-    unit_size = 10
+    unit_size = 5
     plt.figure(figsize=(4 * unit_size, 2 * unit_size), dpi=100)
     plt.subplots_adjust(hspace=0.3)  # 调整子图间距
     for i in range(len_list): #遍历每一个item
@@ -489,7 +489,7 @@ if __name__ =="__main__":
     # draw_trains_in_one_graph2()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2
-    init_outf2("data70_2/data20_1.txt")
+    init_outf2("supervise_step/data_step2-ef3.txt")
 
 
     # draw_gradually_compare_all()
