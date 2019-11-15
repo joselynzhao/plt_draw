@@ -27,22 +27,22 @@ def draw_line():
 
     # for q in np.linspace(1,2,0.2):
     plt.figure(figsize=(8, 6), dpi=300)
-    plt.plot(x, Nu * pow(x, 0.5) * 0.05, label="0.5")
-    plt.plot(x, Nu * pow(x, 0.8) * 0.05, label="0.8")
+    # plt.plot(x, Nu * pow(x, 0.5) * 0.05, label="0.5")
+    # plt.plot(x, Nu * pow(x, 0.8) * 0.05, label="0.8")
     plt.plot(x, Nu * pow(x,1) * 0.05,label="1")
-    plt.plot(x, Nu * pow(x,1.3) * 0.05,label="1.3")
-    plt.plot(x, Nu * pow(x,1.5) * 0.05,label="1.5")
-    # plt.plot(x,Nu * pow(x,1.5)*0.011,label ="1.5_0.011")
-    # plt.plot(x, Nu * pow(x, 2.5) * 0.00055, label="2.5_0.0025")
-    # plt.plot(x, Nu * pow(x, 0.5) * 0.223, label="0.5_0.223")
-    # plt.plot(x, Nu * pow(x, 0.4) * 0.3, label="0.4_0.3")
+    # plt.plot(x, Nu * pow(x,1.3) * 0.05,label="1.3")
+    # plt.plot(x, Nu * pow(x,1.5) * 0.05,label="1.5")
+    plt.plot(x,Nu * pow(x,1.5)*0.011,label ="1.5_0.011")
+    plt.plot(x, Nu * pow(x, 2.5) * 0.00055, label="2.5_0.0025")
+    plt.plot(x, Nu * pow(x, 0.5) * 0.223, label="0.5_0.223")
+    plt.plot(x, Nu * pow(x, 0.4) * 0.3, label="0.4_0.3")
     # for i in [1.5]:
     #     q = i2
     #     y2 = Nu * pow(x, q) * p
     #     plt.plot(x,y2,label=i)
 
-    y3 = -(Nu/2) * np.cos(0.15 *x) + Nu/2
-    y4 = Nu * pow(x,1) * 0.05 -y3
+    # y3 = -(Nu/2) * np.cos(0.15 *x) + Nu/2
+    # y4 = Nu * pow(x,1) * 0.05 -y3
     # plt.plot(x,y3,label="cos")
     # plt.plot(x,y4,label="-cos")
 
@@ -489,11 +489,11 @@ if __name__ =="__main__":
     # draw_trains_in_one_graph2()
     # draw_gradually_compare_all()
     # draw_gradually_all_percent2
-    init_outf2("supervise_step/data_step2-ef3.txt")
+    # init_outf2("supervise_step/data_step2-ef3.txt")
 
 
     # draw_gradually_compare_all()
-    # draw_line()
+    draw_line()
     # select_pre_with_mAP_for_all()
     # draw_lines_for_one_train(EF_10_q_1pro)
 
