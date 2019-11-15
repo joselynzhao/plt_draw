@@ -27,29 +27,29 @@ def draw_line():
 
     # for q in np.linspace(1,2,0.2):
     plt.figure(figsize=(8, 6), dpi=300)
-    plt.plot(x, Nu * pow(x, 0.5) * 0.05, label="0.5")
-    plt.plot(x, Nu * pow(x, 0.8) * 0.05, label="0.8")
-    plt.plot(x, Nu * pow(x,1) * 0.05,label="1")
-    plt.plot(x, Nu * pow(x,1.3) * 0.05,label="1.3")
-    plt.plot(x, Nu * pow(x,1.5) * 0.05,label="1.5")
-    # plt.plot(x,Nu * pow(x,1.5)*0.011,label ="1.5_0.011")
-    # plt.plot(x, Nu * pow(x, 2.5) * 0.00055, label="2.5_0.0025")
-    # plt.plot(x, Nu * pow(x, 0.5) * 0.223, label="0.5_0.223")
-    # plt.plot(x, Nu * pow(x, 0.4) * 0.3, label="0.4_0.3")
+    # plt.plot(x, Nu * pow(x, 0.5) * 0.05, label="0.5")
+    # plt.plot(x, Nu * pow(x, 0.8) * 0.05, label="0.8")
+    plt.plot(x, Nu * pow(x,1) * 0.05,label="5-1(baseline)")
+    # plt.plot(x, Nu * pow(x,1.3) * 0.05,label="1.3")
+    # plt.plot(x, Nu * pow(x,1.5) * 0.05,label="1.5")
+    plt.plot(x,Nu * pow(x,1.5)*0.011,label ="1.1-1.5")
+    plt.plot(x, Nu * pow(x, 2.5) * 0.00055, label="0.055-2.5")
+    plt.plot(x, Nu * pow(x, 0.5) * 0.223, label="22.3-0.5")
+    plt.plot(x, Nu * pow(x, 0.4) * 0.3, label="30-0.4")
     # for i in [1.5]:
     #     q = i2
     #     y2 = Nu * pow(x, q) * p
     #     plt.plot(x,y2,label=i)
 
-    y3 = -(Nu/2) * np.cos(0.15 *x) + Nu/2
-    y4 = Nu * pow(x,1) * 0.05 -y3
+    # y3 = -(Nu/2) * np.cos(0.15 *x) + Nu/2
+    # y4 = Nu * pow(x,1) * 0.05 -y3
     # plt.plot(x,y3,label="cos")
     # plt.plot(x,y4,label="-cos")
 
 
     # plt.plot(x,y1,'b')
     # plt.plot(x,y2,'g')
-    plt.axhline(y=Nu,ls="-.",c="r",label="max_Nu")
+    plt.axhline(y=Nu,ls="-.",c="r",label="Nu")
     # plt.axhspan(x=6,ls="",c="r")
 
     # plt.xticks(np.arange(0, 144, 12), year)
@@ -490,9 +490,9 @@ if __name__ =="__main__":
     # init_outf2("data5.0_1.0.10_19_14-58-12.txt")
 
     # draw_gradually_compare_all()
-    # draw_line()
+    draw_line()
     # select_pre_with_mAP_for_all()
     # draw_lines_for_one_train(EF_10_q_1pro)
 
-    summary_compare()
+    # summary_compare()
 
